@@ -7,24 +7,46 @@ package Patrones;
 
 public class Manejador
 {
-    protected int monto;
-    protected int denominacion;
+    private Manejador next;
+    protected double denominacion;
+    protected int cantidad;
 
-    public Manejador(int monto, int denominacion){
-        this.monto = monto; // Total de billetes
-        this.denominacion = denominacion; // Valor de cada billete
+    public Manejador() {
     }
 
-    public int getMonto(){ return monto; }
-    public int getDenominacion(){ return denominacion; }
-    public void setMonto(int monto){ this.monto = monto; }
+    public Manejador(Manejador next,int cantidad, double denominacion){
+        this.cantidad= cantidad;
+        this.denominacion = denominacion; // Valor de cada billete
+        this.next=next;
+    }
+
+    
+    public double getDenominacion(){ return denominacion; }
+    public void setDenominacion(double denominacion){ this.denominacion = denominacion; }
+
+    public Manejador getNext() {
+        return next;
+    }
+
+    public void setNext(Manejador next) {
+        this.next = next;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    
 
     public boolean retirar(int monto){
-        // Implementar
+        
         return false;
     }
     public boolean depositar(int monto, int denominacion){
-        // Implementar
+            
         return false;
     }
 }

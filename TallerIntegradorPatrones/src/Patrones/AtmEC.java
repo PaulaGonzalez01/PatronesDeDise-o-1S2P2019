@@ -5,18 +5,37 @@
  */
 package Patrones;
 
+
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Scanner;
 
-public class AtmUK {
-    protected final Currency currency=Locale.UK;
-    protected double dinero = 0;
-    protected ArrayList <Manejador> manejadores; // Cada manejador puede entregar dinero de una sola denominación
+public class AtmEC {
+    
+    private final Currency moneda=Currency.getInstance(Locale.US);
+    private double dinero = 0;
+
+    public double getDinero() {
+        return dinero;
+    }
+
+    public void setDinero(double dinero) {
+        this.dinero = dinero;
+    }
+
+    public Manejador getManejador() {
+        return manejador;
+    }
+
+    public void setManejador(Manejador manejador) {
+        this.manejador = manejador;
+    }
+    private Manejador manejador; // Cada manejador puede entregar dinero de una sola denominación
 
     // -----------------
-    public AtmUK() {
-      manejadores = new ArrayList<Manejador>();
+    public AtmEC() {
+      manejador = new Manejador();
     }
     // -----------------
     public double getTotal() {
@@ -36,10 +55,23 @@ public class AtmUK {
     }
 
     public void addManejador(Manejador m){
-        manejadores.add(m);
+        m.setNext(manejador.getNext());
+        manejador.setNext(m);
     }
     public Manejador removeManejador(int i){
-        return manejadores.remove(i);
+       Manejador manejador1 = this.manejador;
+       if (this.manejador.denominacion==i){
+           Manejador manejadorret = manejador;
+           this.setManejador(this.manejador.getNext());
+           return manejadorret;
+       }
+        while(manejador.getNext()!=null){
+             manejador1 = manejador1.getNext();
+            
+        }
+       
+        
+        return manejador1;
     }
 
     //Dentro de las transacciones se debe llamar al ATM para hacer el retiro o deposito de la cuenta correspondiente
@@ -51,6 +83,7 @@ public class AtmUK {
         System.out.println("2. Deposit");
         System.out.println("3. Balance");
         System.out.println("4. Balance ATM");
+        Scanner in = new Scanner(System.in);
         choice = in.nextInt();
         switch(choice){
             case 1:
@@ -99,8 +132,9 @@ public class AtmUK {
         }
     }
     public static void anotherTransaction(Account cuenta){
+         Scanner in = new Scanner(System.in);
         System.out.println("Do you want another transaction?\n\nPress 1 for another transaction\n2 To exit");
-        anotherTransaction = in.nextInt();
+        int anotherTransaction  = in      .nextInt();
         if(anotherTransaction == 1){
             transaction(cuenta); // call transaction method
         } else if(anotherTransaction == 2){
