@@ -5,14 +5,15 @@
  */
 package singleton;
 import Patrones.Account;
-import java.util.Currency
+import Patrones.Manejador;
+import java.util.Currency;
 
 /**
  *
  * @author CltControl
  */
 public class AtmEC {
-        private AtmEC instance;
+        private static AtmEC instance;
         private Currency moneda;
         private Double dinero ;
         private Manejador manejador;
@@ -20,16 +21,20 @@ public class AtmEC {
         private AtmEC(){
             
         }
-        public AtmEC getInstance(){
-            return this.instance;
+        public static AtmEC getInstance(){
+            if (instance == null){
+                instance = new AtmEC();
+            }
+             
+            return instance;
         }
         
         public boolean sacarDinero(int dinero){
-            return true;
+            return manejador.retirar(dinero);
         }
         
         public boolean ingresarDinero(int n, double denominacion){
-            return true;
+            return manejador.depositar(n, (int) denominacion);
         }
         
         public void addManejador(Manejador m){
@@ -37,7 +42,7 @@ public class AtmEC {
         }
         
         public Manejador removeManejador(int i){
-            return 
+            return null;
         }
         
         public void transaction(Account cuenta){
