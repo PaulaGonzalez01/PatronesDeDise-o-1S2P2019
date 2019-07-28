@@ -25,11 +25,7 @@ public class AtmEC {
     
     
     private AtmEC() {
-
-
     }
-
-
 
     public static AtmEC getInstance() {
         return instance;
@@ -52,26 +48,18 @@ public class AtmEC {
        public void addManejador(Manejador m){
            if(manejador == null){
                manejador = m;
-           }/*else{
-               for(Manejador m1 = manejador; m1 != null; m1 = m.getNext()){
-                   if(manejador.getNext() == null){
-                       manejador.setNext(m);
-                   }
-               }
-           }*/
+           }
         }
        
        
        public Manejador removeManejador(Manejador m){
-           /*for(int i=0; i<=m.size();i++){
-               return manejadores.remove(i);
-           }*/
            return null;
        }
        
        
        public static void transaction(Cuenta cuenta){
         cuentaAdap = cuenta;
+        // here is where most of the work is
         Scanner in= new Scanner(System.in);
         int choice; 
         System.out.println("Please select an option"); 
@@ -81,7 +69,6 @@ public class AtmEC {
         System.out.println("4. Balance ATM");
         System.out.print("opcion: ");
         choice = in.nextInt();
-        //in.next();
         switch(choice){
             case 1:
                 float amount; 
@@ -138,18 +125,17 @@ public class AtmEC {
 
        public static void anotherTransaction(Cuenta cuenta){
 
-            Scanner in = new Scanner(System.in);
-            int op;
-            System.out.println("Do you want another transaction?\n\nPress 1 for another transaction\n2 To exit");
-            op = in.nextInt();
-            if (op == 1) {
-               transaction(cuenta); // call transaction method
-            } else if (op == 2) {
-                System.out.println("Thanks for choosing us. Good Bye!");
-            } else {
-                System.out.println("Invalid choice\n\n");
-                anotherTransaction(cuenta);
+          Scanner in = new Scanner(System.in);
+        int op;
+        System.out.println("Do you want another transaction?\n\nPress 1 for another transaction\n2 To exit");
+        op = in.nextInt();
+        if (op == 1) {
+            transaction(cuenta); // call transaction method
+        } else if (op == 2) {
+            System.out.println("Thanks for choosing us. Good Bye!");
+        } else {
+            System.out.println("Invalid choice\n\n");
+            anotherTransaction(cuenta);
         }
     }
 }
-
