@@ -13,21 +13,20 @@ public class Main
     public static void main(String[] args)
     {
         AtmEC atm = new AtmEC();
-        ManejadorDinero m1=new ManejadorDinero();
-        m1.setCantidad(100);
-        m1.setDenominacion(20);
-        ManejadorDinero m2=new ManejadorDinero();
-        m2.setCantidad(100);
-        m2.setDenominacion(10);
-        ManejadorDinero m3=new ManejadorDinero();
-        m3.setCantidad(10);
-        m3.setDenominacion(0.5);
-        ManejadorDinero m4=new ManejadorDinero();
-        m4.setCantidad(10);
-        m4.setDenominacion(0.25);
-        ManejadorDinero m5=new ManejadorDinero();
-        m5.setCantidad(1000);
-        m5.setDenominacion(0.05);
+        ManejadorDinero m1=null;
+        m1.Manejador(100,20);
+        
+        ManejadorDinero m2=null;
+        m2.Manejador(100, 10);
+       
+        ManejadorDinero m3=null;
+       m3.Manejador(10, 0.5);
+        ManejadorDinero m4=null;
+        m4.Manejador(10, 0.25);
+        
+        ManejadorDinero m5=null;
+        m5.Manejador(1000, 0.05);
+        
         m1.setNext(m2);
         m2.setNext(m3);
         m3.setNext(m4);
@@ -36,8 +35,6 @@ public class Main
         
         
        
-        // Crear un único cajero Automático de dólares con 100 billetes de 20, 100 de 10, 
-        // 10 monedas de 0.50, 10 de 0.25 y 1000 de 0.05
 
         // Crear 10 cuentas nuevas en dólares locale.US con un saldo inicial entre 100.00 y 1000.00 USD cada una.
         

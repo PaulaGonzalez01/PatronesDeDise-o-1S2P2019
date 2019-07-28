@@ -26,24 +26,17 @@ public class ManejadorDinero implements Manejador
     }
 
     
-    public double getDenominacion(){ return denominacion; }
-    public void setDenominacion(double denominacion){ this.denominacion = denominacion; }
+    
 
     public Manejador getNext() {
         return next;
     }
 
-    public void setNext(Manejador next) {
-        this.next = next;
+    public void setNext(Manejador m) {
+        this.next = m;
     }
 
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
+   
     
 
     public boolean Retirar(double monto){
@@ -86,10 +79,11 @@ public class ManejadorDinero implements Manejador
         this.cantidad = cantidad;
     }
 
-    @Override
-    public void SetNext(Manejador m) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
+
+   
+
+  
 
     
 

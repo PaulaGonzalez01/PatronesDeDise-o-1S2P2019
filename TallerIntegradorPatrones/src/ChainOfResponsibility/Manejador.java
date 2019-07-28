@@ -12,7 +12,7 @@ package ChainOfResponsibility;
 public interface Manejador {
     
     public void Manejador(int n, double denominacion);
-    public void SetNext(Manejador m);
+    public void setNext(Manejador m);
     public boolean Retirar(double monto);
     public boolean Depositar(int n, double denominacion);
     
