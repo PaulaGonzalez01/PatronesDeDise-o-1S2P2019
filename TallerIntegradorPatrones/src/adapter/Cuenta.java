@@ -10,7 +10,7 @@ package adapter;
  * @author CltControl
  */
 public interface Cuenta {
-    double balance();
-    boolean retirar(double monto);
-    boolean depositar(int n, double denominacion);
+    public double balance();
+    public boolean retirar(double monto);
+    public boolean depositar(int n, double denominacion);
 }

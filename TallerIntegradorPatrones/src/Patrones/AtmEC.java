@@ -4,102 +4,105 @@
  * and open the template in the editor.
  */
 package Patrones;
-
-
-import ChainOfResponsibility.ManejadorDinero;
+import adapter.Cuenta;
+import adapter.CuentaAdapter;
 import java.util.ArrayList;
 import java.util.Currency;
-import java.util.Locale;
 import java.util.Scanner;
+import ChainOfResponsibility.Manejador;
 
+/**
+ *
+ * @author CltControl
+ */
 public class AtmEC {
+    private static AtmEC instance = new AtmEC();
+    private Currency moneda;
+    private double dinero;
+    private static Manejador manejador;
+    private static Cuenta cuentaAdap;
+  
     
-    private final Currency moneda=Currency.getInstance(Locale.US);
-    private double dinero = 0;
+    
+    private AtmEC() {
 
-    public double getDinero() {
-        return dinero;
-    }
 
-    public void setDinero(double dinero) {
-        this.dinero = dinero;
     }
 
-    public ManejadorDinero getManejador() {
-        return manejador;
+
+
+    public static AtmEC getInstance() {
+        return instance;
     }
 
-    public void setManejador(ManejadorDinero manejador) {
-        this.manejador = manejador;
-    }
-    private ManejadorDinero manejador; // Cada manejador puede entregar dinero de una sola denominación
-
-    // -----------------
-    public AtmEC() {
-      manejador = new ManejadorDinero();
-    }
-    // -----------------
-    public double getTotal() {
-        return this.dinero;
-    }
-
-    // -----------------
-    public void sacarDinero(double dinero) {
-        this.dinero -= dinero;
-        // Todo: realizar el proceso de sacar de cada manejador la cantidad requerida
-    }
-
-    // -----------------
-    public void ingresarDinero(double dinero, int denominacion) {
-        this.dinero += dinero;
-        // Todo: Sólo se puede depositar billetes de una sola denominación y agregarse al manejador correspondiente
-    }
-
-    public void addManejador(ManejadorDinero m){
-        m.setNext(manejador.getNext());
-        manejador.setNext(m);
-    }
-    public ManejadorDinero removeManejador(int i){
-       ManejadorDinero manejador1 = this.manejador;
-       if (this.manejador.getDenominacion()==i){
-           ManejadorDinero manejadorret = manejador;
-           this.setManejador(this.manejador.getNext());
-           return manejadorret;
+       public boolean sacarDinero(double dinero){
+            if(manejador!= null){
+                return manejador.Retirar(dinero);
+            }
+            return false;
        }
-        while(manejador.getNext()!=null){
-             manejador1 = manejador1.getNext();
-            
+
+       public boolean ingresarDinero(int n, double denominacion){
+           if(manejador!= null){
+                return manejador.Depositar(n, denominacion);
+            }
+           return false;
+       }
+
+       public void addManejador(Manejador m){
+           if(manejador == null){
+               manejador = m;
+           }/*else{
+               for(Manejador m1 = manejador; m1 != null; m1 = m.getNext()){
+                   if(manejador.getNext() == null){
+                       manejador.setNext(m);
+                   }
+               }
+           }*/
         }
        
-        
-        return manejador1;
-    }
-
-    //Dentro de las transacciones se debe llamar al ATM para hacer el retiro o deposito de la cuenta correspondiente
-    public static void transaction(Account cuenta){
-        // here is where most of the work is
+       
+       public Manejador removeManejador(Manejador m){
+           /*for(int i=0; i<=m.size();i++){
+               return manejadores.remove(i);
+           }*/
+           return null;
+       }
+       
+       
+       public static void transaction(Cuenta cuenta){
+        cuentaAdap = cuenta;
+        Scanner in= new Scanner(System.in);
         int choice; 
         System.out.println("Please select an option"); 
         System.out.println("1. Withdraw");
         System.out.println("2. Deposit");
         System.out.println("3. Balance");
         System.out.println("4. Balance ATM");
-        Scanner in = new Scanner(System.in);
+        System.out.print("opcion: ");
         choice = in.nextInt();
+        //in.next();
         switch(choice){
             case 1:
                 float amount; 
-                System.out.println("Please enter amount to withdraw: "); 
+                System.out.print("Por favor ingrese el monto a retirar: "); 
                 amount = in.nextFloat();
-                if(amount > cuenta.getAmount() || amount == 0){
-                    System.out.println("You have insufficient funds\n\n"); 
+                if(amount > cuenta.balance()|| amount == 0){
+                    System.out.println("Su saldo es insuficiente!!\n\n"); 
+  
                     anotherTransaction(cuenta); // ask if they want another transaction
                 } else {
                     // Todo: verificar que se puede realizar el retiro del atm
-                    
+                    if(amount<cuenta.balance()){
+                        cuentaAdap.retirar(amount);
+                    }    
                     // Todo: actualizar tanto la cuenta como el atm y de los manejadores
-                    // cuenta.retirar(amount);
-                    // AtmUK.sacarDinero(amount);
+                    cuenta.retirar(amount);
+                    if(instance.sacarDinero(amount)){
+                        System.out.println("Se realizó el retiro exitosamente");
+                    }else{
+                        System.out.println("No hay suficiente efectivo en el ATM.");
+                    }
 
                     // Todo: Mostrar resumen de transacción o error
                     // "You have withdrawn "+amount+" and your new balance is "+balance;
@@ -132,19 +135,21 @@ public class AtmEC {
             break;
         }
     }
-    public static void anotherTransaction(Account cuenta){
-         Scanner in = new Scanner(System.in);
-        System.out.println("Do you want another transaction?\n\nPress 1 for another transaction\n2 To exit");
-        int anotherTransaction  = in      .nextInt();
-        if(anotherTransaction == 1){
-            transaction(cuenta); // call transaction method
-        } else if(anotherTransaction == 2){
-            System.out.println("Thanks for choosing us. Good Bye!");
-        } else {
-            System.out.println("Invalid choice\n\n");
-            anotherTransaction(cuenta);
+
+       public static void anotherTransaction(Cuenta cuenta){
+
+            Scanner in = new Scanner(System.in);
+            int op;
+            System.out.println("Do you want another transaction?\n\nPress 1 for another transaction\n2 To exit");
+            op = in.nextInt();
+            if (op == 1) {
+               transaction(cuenta); // call transaction method
+            } else if (op == 2) {
+                System.out.println("Thanks for choosing us. Good Bye!");
+            } else {
+                System.out.println("Invalid choice\n\n");
+                anotherTransaction(cuenta);
         }
     }
-
-    
 }
+

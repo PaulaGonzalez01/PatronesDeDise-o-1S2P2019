@@ -6,7 +6,7 @@
 package ChainOfResponsibility;
 
 import Patrones.Account;
-import singleton.AtmEC;
+import Patrones.AtmEC;
 
 public class ManejadorDinero implements Manejador
 {
@@ -17,7 +17,12 @@ public class ManejadorDinero implements Manejador
     public ManejadorDinero() {
     }
 
-    
+    public ManejadorDinero(int n, double denominacion) {
+        cantidad = n;
+        this.denominacion = denominacion;
+        next = null;
+    }
+
 
     public ManejadorDinero(ManejadorDinero next,int cantidad, double denominacion){
         this.cantidad= cantidad;
@@ -75,24 +80,13 @@ public class ManejadorDinero implements Manejador
 
     @Override
     public void Manejador(int n, double denominacion) {
-         this.denominacion = denominacion;
+        this.denominacion = denominacion;
         this.cantidad = cantidad;
     }
 
-   
+    public double getDenominacion() {
+        return this.denominacion;
+    }
 
-   
-
-  
-
-    
-
-    
-
-   
-    
-
-    
-
-    
+ 
 }
