@@ -5,6 +5,7 @@
  */
 package Patrones;
 
+import ChainOfResponsibility.Manejador;
 import ChainOfResponsibility.ManejadorDinero;
 
 public class Main
@@ -12,11 +13,21 @@ public class Main
     public static void main(String[] args)
     {
         AtmEC atm = new AtmEC();
-        ManejadorDinero m1=new ManejadorDinero(20,100);
-        ManejadorDinero m2=new ManejadorDinero(10,100);
-        ManejadorDinero m3=new ManejadorDinero(0.5,10);
-        ManejadorDinero m4=new ManejadorDinero(0.25,10);
-        ManejadorDinero m5=new ManejadorDinero(0.05,1000);
+        ManejadorDinero m1=new ManejadorDinero();
+        m1.setCantidad(100);
+        m1.setDenominacion(20);
+        ManejadorDinero m2=new ManejadorDinero();
+        m2.setCantidad(100);
+        m2.setDenominacion(10);
+        ManejadorDinero m3=new ManejadorDinero();
+        m3.setCantidad(10);
+        m3.setDenominacion(0.5);
+        ManejadorDinero m4=new ManejadorDinero();
+        m4.setCantidad(10);
+        m4.setDenominacion(0.25);
+        ManejadorDinero m5=new ManejadorDinero();
+        m5.setCantidad(1000);
+        m5.setDenominacion(0.05);
         m1.setNext(m2);
         m2.setNext(m3);
         m3.setNext(m4);
@@ -24,7 +35,7 @@ public class Main
         atm.setManejador(m1);
         
         
-        atm.addManejador(m1);
+       
         // Crear un único cajero Automático de dólares con 100 billetes de 20, 100 de 10, 
         // 10 monedas de 0.50, 10 de 0.25 y 1000 de 0.05
 

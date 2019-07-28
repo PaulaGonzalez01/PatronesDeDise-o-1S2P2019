@@ -8,19 +8,16 @@ package ChainOfResponsibility;
 import Patrones.Account;
 import singleton.AtmEC;
 
-public class ManejadorDinero
+public class ManejadorDinero implements Manejador
 {
-    private ManejadorDinero next;
+    private Manejador next;
     protected double denominacion;
     protected int cantidad;
 
     public ManejadorDinero() {
     }
 
-    public ManejadorDinero(double denominacion, int cantidad) {
-        this.denominacion = denominacion;
-        this.cantidad = cantidad;
-    }
+    
 
     public ManejadorDinero(ManejadorDinero next,int cantidad, double denominacion){
         this.cantidad= cantidad;
@@ -32,11 +29,11 @@ public class ManejadorDinero
     public double getDenominacion(){ return denominacion; }
     public void setDenominacion(double denominacion){ this.denominacion = denominacion; }
 
-    public ManejadorDinero getNext() {
+    public Manejador getNext() {
         return next;
     }
 
-    public void setNext(ManejadorDinero next) {
+    public void setNext(Manejador next) {
         this.next = next;
     }
 
@@ -49,23 +46,59 @@ public class ManejadorDinero
     }
     
 
-    public boolean retirar(double monto,Account a){
+    public boolean Retirar(double monto){
         if(monto >= this.denominacion){
 			double num = monto/this.denominacion;
 			double remainder = monto % this.denominacion;
 			System.out.println("Retirando "+num+" billetes/monedas de "  +this.denominacion);
-			if(remainder !=0) this.retirar(remainder,a);
-                        a.withdraw(monto);
+			if(remainder !=0) this.Retirar(remainder);
+                        this.cantidad=cantidad-(int)num;
 		}else{
-			this.next.retirar(monto, a);
+			this.next.Retirar(monto);
 		}
         return true;
         
         
     }
-    public boolean depositar(int n, int denominacion, Account a){
-            double cantidad= n*denominacion;
-            a.deposit(cantidad);
+    public boolean Depositar(int n, double denominacion){
+        
+            boolean v=true;
+            while(v){
+                if(this.denominacion==denominacion){
+                    this.cantidad=this.cantidad+n;
+                    v=false;
+                    return true;
+                } else 
+                    this.getNext().Depositar(n, denominacion);
+            
+                
+                
+            }
+            
+            
+            
         return false;
     }
+
+    @Override
+    public void Manejador(int n, double denominacion) {
+         this.denominacion = denominacion;
+        this.cantidad = cantidad;
+    }
+
+    @Override
+    public void SetNext(Manejador m) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+
+    
+
+   
+    
+
+    
+
+    
 }
