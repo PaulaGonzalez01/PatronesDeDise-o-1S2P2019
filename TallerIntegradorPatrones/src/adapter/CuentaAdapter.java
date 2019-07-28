@@ -26,7 +26,7 @@ public class CuentaAdapter implements Cuenta {
     }
 
     @Override
-    public boolean retirar(int monto) {
+    public boolean retirar(double monto) {
         String s = cuenta.withdraw(cuenta.getAmount());
         if(s.startsWith("Error")){
             return false;

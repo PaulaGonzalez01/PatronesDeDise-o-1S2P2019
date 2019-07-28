@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Patrones;
+package ChainOfResponsibility;
 
 /**
  *
  * @author CltControl
  */
-public interface IManejador {
+public interface Manejador {
     
     public void IManejador(int n, double denominacion);
-    public void SetNext(IManejador m);
+    public void SetNext(Manejador m);
     public boolean Retirar(int monto);
     public boolean Depositar(int n, double denominacion);
     

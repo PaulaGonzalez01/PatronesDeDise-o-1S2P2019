@@ -5,7 +5,7 @@
  */
 package singleton;
 import Patrones.Account;
-import Patrones.Manejador;
+import ChainOfResponsibility.ManejadorDinero;
 import java.util.Currency;
 
 /**
@@ -16,7 +16,7 @@ public class AtmEC {
         private static AtmEC instance;
         private Currency moneda;
         private Double dinero ;
-        private Manejador manejador;
+        private ManejadorDinero manejador;
         
         private AtmEC(){
             
@@ -29,7 +29,7 @@ public class AtmEC {
             return instance;
         }
         
-        public boolean sacarDinero(int dinero){
+        public boolean sacarDinero(double dinero){
             return manejador.retirar(dinero);
         }
         
@@ -37,11 +37,11 @@ public class AtmEC {
             return manejador.depositar(n, (int) denominacion);
         }
         
-        public void addManejador(Manejador m){
+        public void addManejador(ManejadorDinero m){
             
         }
         
-        public Manejador removeManejador(int i){
+        public ManejadorDinero removeManejador(int i){
             return null;
         }
         

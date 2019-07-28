@@ -11,6 +11,6 @@ package adapter;
  */
 public interface Cuenta {
     double balance();
-    boolean retirar(int monto);
+    boolean retirar(double monto);
     boolean depositar(int n, double denominacion);
 }

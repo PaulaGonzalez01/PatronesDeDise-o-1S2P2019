@@ -6,6 +6,7 @@
 package Patrones;
 
 
+import ChainOfResponsibility.ManejadorDinero;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
@@ -24,18 +25,18 @@ public class AtmEC {
         this.dinero = dinero;
     }
 
-    public Manejador getManejador() {
+    public ManejadorDinero getManejador() {
         return manejador;
     }
 
-    public void setManejador(Manejador manejador) {
+    public void setManejador(ManejadorDinero manejador) {
         this.manejador = manejador;
     }
-    private Manejador manejador; // Cada manejador puede entregar dinero de una sola denominación
+    private ManejadorDinero manejador; // Cada manejador puede entregar dinero de una sola denominación
 
     // -----------------
     public AtmEC() {
-      manejador = new Manejador();
+      manejador = new ManejadorDinero();
     }
     // -----------------
     public double getTotal() {
@@ -54,14 +55,14 @@ public class AtmEC {
         // Todo: Sólo se puede depositar billetes de una sola denominación y agregarse al manejador correspondiente
     }
 
-    public void addManejador(Manejador m){
+    public void addManejador(ManejadorDinero m){
         m.setNext(manejador.getNext());
         manejador.setNext(m);
     }
-    public Manejador removeManejador(int i){
-       Manejador manejador1 = this.manejador;
-       if (this.manejador.denominacion==i){
-           Manejador manejadorret = manejador;
+    public ManejadorDinero removeManejador(int i){
+       ManejadorDinero manejador1 = this.manejador;
+       if (this.manejador.getDenominacion()==i){
+           ManejadorDinero manejadorret = manejador;
            this.setManejador(this.manejador.getNext());
            return manejadorret;
        }
@@ -95,7 +96,7 @@ public class AtmEC {
                     anotherTransaction(cuenta); // ask if they want another transaction
                 } else {
                     // Todo: verificar que se puede realizar el retiro del atm
-
+                    
                     // Todo: actualizar tanto la cuenta como el atm y de los manejadores
                     // cuenta.retirar(amount);
                     // AtmUK.sacarDinero(amount);
